@@ -25,12 +25,21 @@ while (finished == False):
   # Check if key is pressed
   pressedKeys = pygame.key.get_pressed()
 
+  # If Space Key is pressed then increase the y coordinate by 5
+  if (pressedKeys[pygame.K_SPACE] == 1):
+    y += 5
+
   # Store rectangle object in a variable
   # Define x, y, width, and height of rectangle
   rectOne = pygame.Rect(x,y,30,30)
 
   # Create a tuple to hold a color
   color = (0,0,255)
+  # Define the color black in a variable
+  black = (0,0,0)
+
+  # Overwrite the original blue rectangle to black before creating a new one
+  screen.fill((black))
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   pygame.draw.rect(screen, color, rectOne)
