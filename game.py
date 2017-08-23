@@ -14,6 +14,18 @@ finished = False
 x = 0
 y = 50
 
+# Load player image to playerImage variable
+playerImage = pygame.image.load("elon_musk.png")
+
+# Scale and transform Image to fit rectangle
+playerImage = pygame.transform.scale(playerImage, (30, 30))
+
+# Make playerImage ready for game
+playerImage = playerImage.convert()
+
+# Create a Clock and store in frame variable
+frame = pygame.time.Clock()
+
 # While our game is not finished
 while (finished == False):
   # get() method gives us all of the events that have happened since last check
@@ -41,8 +53,14 @@ while (finished == False):
   # Overwrite the original blue rectangle to black before creating a new one
   screen.fill((black))
 
+  # Put playerImage into window
+  screen.blit(playerImage, (x, y))
+
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
-  pygame.draw.rect(screen, color, rectOne)
+  # pygame.draw.rect(screen, color, rectOne)
 
   # Update the screen
   pygame.display.flip()
+
+  # Create frame rate (frames per second)
+  frame.tick(30)
