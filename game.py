@@ -5,23 +5,32 @@ pygame.init()
 
 # Display is an object inside Pygame
 # Set Mode method creates a screen with the size inputted
-screen = pygame.display.set_mode((900,700))
+screen = pygame.display.set_mode((1000,700))
 
 # Variable to keep track if our game is finished
 finished = False
 
 # Set x & y coordinates
-x = 0
-y = 50
+x = 570
+y = 320
 
 # Load player image to playerImage variable
 playerImage = pygame.image.load("elon_musk.png")
 
 # Scale and transform Image to fit rectangle
-playerImage = pygame.transform.scale(playerImage, (30, 30))
+playerImage = pygame.transform.scale(playerImage, (80, 80))
 
 # Make playerImage ready for game
-playerImage = playerImage.convert()
+playerImage = playerImage.convert_alpha()
+
+# Load background image to backgroundImage variable
+backgroundImage = pygame.image.load("spacex.jpg")
+
+# Scale and transform Image to fit the screen
+backgroundImage = pygame.transform.scale(backgroundImage, (1000,700))
+
+# Put background image into the window
+screen.blit(backgroundImage, (0,0))
 
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
@@ -39,19 +48,23 @@ while (finished == False):
 
   # If Space Key is pressed then increase the y coordinate by 5
   if (pressedKeys[pygame.K_SPACE] == 1):
-    y += 5
+    y -= 10
+    x += 10
 
   # Store rectangle object in a variable
   # Define x, y, width, and height of rectangle
-  rectOne = pygame.Rect(x,y,30,30)
+  # rectOne = pygame.Rect(x,y,30,30)
 
   # Create a tuple to hold a color
   color = (0,0,255)
   # Define the color black in a variable
-  black = (0,0,0)
+  white = (255,255,255)
 
   # Overwrite the original blue rectangle to black before creating a new one
-  screen.fill((black))
+  screen.fill((white))
+
+  # Fill background image onto the screen
+  screen.blit(backgroundImage, (0,0))
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
