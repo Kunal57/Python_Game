@@ -14,5 +14,6 @@ finished = False
 while (finished == False):
   # get() method gives us all of the events that have happened since last check
   for event in pygame.event.get():
-    # keyword to not do anything
-    pass
+    # Looking at Event type. If type is a Quit Event then finish the game
+    if event.type == pygame.QUIT:
+      finished = True
