@@ -10,6 +10,10 @@ screen = pygame.display.set_mode((900,700))
 # Variable to keep track if our game is finished
 finished = False
 
+# Set x & y coordinates
+x = 0
+y = 50
+
 # While our game is not finished
 while (finished == False):
   # get() method gives us all of the events that have happened since last check
@@ -18,9 +22,12 @@ while (finished == False):
     if event.type == pygame.QUIT:
       finished = True
 
+  # Check if key is pressed
+  pressedKeys = pygame.key.get_pressed()
+
   # Store rectangle object in a variable
   # Define x, y, width, and height of rectangle
-  rectOne = pygame.Rect(0,50,30,30)
+  rectOne = pygame.Rect(x,y,30,30)
 
   # Create a tuple to hold a color
   color = (0,0,255)
