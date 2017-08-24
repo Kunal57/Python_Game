@@ -11,11 +11,11 @@ screen = pygame.display.set_mode((1000,700))
 finished = False
 
 # Set x & y coordinates
-x = 570
-y = 320
+x = 0
+y = 550
 
 # Load player image to playerImage variable
-playerImage = pygame.image.load("rocket.jpg")
+playerImage = pygame.image.load("rocket.png")
 
 # Scale and transform Image to fit rectangle
 playerImage = pygame.transform.scale(playerImage, (100, 200))
@@ -33,7 +33,7 @@ backgroundImage = pygame.transform.scale(backgroundImage, (1000,700))
 screen.blit(backgroundImage, (0,0))
 
 # Load treasure image to treasureImage variable
-treasureImage = pygame.image.load("mars.jpg")
+treasureImage = pygame.image.load("mars.png")
 
 # Scale and transform Image to be smaller than the playerImage
 treasureImage = pygame.transform.scale(treasureImage, (100, 100))
@@ -42,8 +42,8 @@ treasureImage = pygame.transform.scale(treasureImage, (100, 100))
 treasureImage = treasureImage.convert_alpha()
 
 # Set treasure coordinates
-treasureX = 700
-treasureY = 500
+treasureX = 890
+treasureY = 10
 
 # Put treasure image into the window
 screen.blit(treasureImage, (treasureX, treasureY))
@@ -64,8 +64,8 @@ while (finished == False):
 
   # If Space Key is pressed then increase the y coordinate by 5
   if (pressedKeys[pygame.K_SPACE] == 1):
-    y -= 10
-    x += 10
+    y -= 3
+    x += 5
 
   # Store rectangle object in a variable
   # Define x, y, width, and height of rectangle
