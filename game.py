@@ -1,5 +1,39 @@
 import pygame
 
+# Function to check for collisions
+def checkCollision(x,y,treasureX,treasureY):
+  # Use global keyword to declare global variables
+  global screen, textWin
+
+  collisionState = False
+
+  # Check if playerImage touches the treasureImage
+  if (y >= treasureY and y <= treasureY + 100):
+    if (x >= treasureX and x <= treasureX + 100):
+      # Display textWin on the screen and center the text
+      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
+      # Move playerImage back to original starting position
+      y = 550
+      x = 0
+      collisionState = True
+    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
+      y = 550
+      x = 0
+      collisionState = True
+  elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
+    if (x >= treasureX and x <= treasureX + 100):
+      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
+      y = 550
+      x = 0
+      collisionState = True
+    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
+      y = 550
+      x = 0
+      collisionState = True
+  return collisionState, y
+
 # Initialize Pygame Library
 pygame.init()
 
@@ -93,18 +127,6 @@ while (finished == False):
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
-
-  # Check if playerImage touches the treasureImage
-  if (y >= treasureY and y <= treasureY + 100):
-    if (x >= treasureX and x <= treasureX + 100):
-      screen.blit(textWin, (400, 300))
-    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      screen.blit(textWin, (400, 300))
-  elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
-    if (x >= treasureX and x <= treasureX + 100):
-      screen.blit(textWin, (400, 300))
-    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      screen.blit(textWin, (400, 300))
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   # pygame.draw.rect(screen, color, rectOne)
