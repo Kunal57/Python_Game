@@ -10,29 +10,24 @@ def checkCollision(x,y,treasureX,treasureY):
   # Check if playerImage touches the treasureImage
   if (y >= treasureY and y <= treasureY + 100):
     if (x >= treasureX and x <= treasureX + 100):
-      # Display textWin on the screen and center the text
-      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
       # Move playerImage back to original starting position
       y = 550
       x = 0
       collisionState = True
     elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
       y = 550
       x = 0
       collisionState = True
   elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
     if (x >= treasureX and x <= treasureX + 100):
-      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
       y = 550
       x = 0
       collisionState = True
     elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
       y = 550
       x = 0
       collisionState = True
-  return collisionState, y
+  return collisionState, y, x
 
 # Initialize Pygame Library
 pygame.init()
@@ -85,11 +80,14 @@ screen.blit(treasureImage, (treasureX, treasureY))
 # Get font from Pygame and store in font variable
 font = pygame.font.Font("MuktaMahee.ttf", 60)
 
-# Create text object
-textWin = font.render("Great Job!", True, (255,255,255))
+# Create Levels variable
+level = 1
 
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
+
+# Define if the playerImage has collided with the treasure
+collisionTreasure = False
 
 # While our game is not finished
 while (finished == False):
@@ -127,6 +125,22 @@ while (finished == False):
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
+
+  # Call checkCollision function and store in variables
+  collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
+
+  # Refactor checkCollisions function to make it DRY (Don't Repeat Yourself)
+  if (collisionTreasure == True):
+    # Increment Level
+    level += 1
+    # Create text object and display level that user is on
+    textWin = font.render("You've reached level " + str(level), True, (255,255,255))
+    # Display textWin on the screen and center the text
+    screen.blit(textWin, (500 - textWin.get_width()/2, 350 - textWin.get_height()/2))
+    # Update the screen
+    pygame.display.flip()
+    # Slow down frame to make text appear slower
+    frame.tick(1)
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   # pygame.draw.rect(screen, color, rectOne)
