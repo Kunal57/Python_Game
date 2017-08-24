@@ -77,7 +77,7 @@ while (finished == False):
   white = (255,255,255)
 
   # Overwrite the original blue rectangle to black before creating a new one
-  screen.fill((white))
+  # screen.fill((white))
 
   # Fill background image onto the screen
   screen.blit(backgroundImage, (0,0))
@@ -87,6 +87,12 @@ while (finished == False):
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
+
+  # Check if playerImage touches the treasureImage
+  if (y >= treasureY and y <= treasureY + 100):
+    pass
+  elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
+    pass
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   # pygame.draw.rect(screen, color, rectOne)
