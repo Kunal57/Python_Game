@@ -48,6 +48,12 @@ treasureY = 10
 # Put treasure image into the window
 screen.blit(treasureImage, (treasureX, treasureY))
 
+# Get font from Pygame and store in font variable
+font = pygame.font.Font("MuktaMahee.ttf", 60)
+
+# Create text object
+textWin = font.render("Great Job!", True, (255,255,255))
+
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
 
@@ -91,14 +97,14 @@ while (finished == False):
   # Check if playerImage touches the treasureImage
   if (y >= treasureY and y <= treasureY + 100):
     if (x >= treasureX and x <= treasureX + 100):
-      pass
+      screen.blit(textWin, (400, 300))
     elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      pass
+      screen.blit(textWin, (400, 300))
   elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
     if (x >= treasureX and x <= treasureX + 100):
-      pass
+      screen.blit(textWin, (400, 300))
     elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
-      pass
+      screen.blit(textWin, (400, 300))
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   # pygame.draw.rect(screen, color, rectOne)
