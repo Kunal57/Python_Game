@@ -90,9 +90,15 @@ while (finished == False):
 
   # Check if playerImage touches the treasureImage
   if (y >= treasureY and y <= treasureY + 100):
-    pass
+    if (x >= treasureX and x <= treasureX + 100):
+      pass
+    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+      pass
   elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
-    pass
+    if (x >= treasureX and x <= treasureX + 100):
+      pass
+    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+      pass
 
   # Draws rectangle onto the screen, need to input screen, color, and rectangle object
   # pygame.draw.rect(screen, color, rectOne)
