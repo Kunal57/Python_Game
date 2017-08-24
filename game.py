@@ -15,22 +15,38 @@ x = 570
 y = 320
 
 # Load player image to playerImage variable
-playerImage = pygame.image.load("elon_musk.png")
+playerImage = pygame.image.load("rocket.jpg")
 
 # Scale and transform Image to fit rectangle
-playerImage = pygame.transform.scale(playerImage, (80, 80))
+playerImage = pygame.transform.scale(playerImage, (100, 200))
 
 # Make playerImage ready for game
 playerImage = playerImage.convert_alpha()
 
 # Load background image to backgroundImage variable
-backgroundImage = pygame.image.load("spacex.jpg")
+backgroundImage = pygame.image.load("space.jpg")
 
 # Scale and transform Image to fit the screen
 backgroundImage = pygame.transform.scale(backgroundImage, (1000,700))
 
 # Put background image into the window
 screen.blit(backgroundImage, (0,0))
+
+# Load treasure image to treasureImage variable
+treasureImage = pygame.image.load("mars.jpg")
+
+# Scale and transform Image to be smaller than the playerImage
+treasureImage = pygame.transform.scale(treasureImage, (100, 100))
+
+# Make treasureImage ready for game
+treasureImage = treasureImage.convert_alpha()
+
+# Set treasure coordinates
+treasureX = 700
+treasureY = 500
+
+# Put treasure image into the window
+screen.blit(treasureImage, (treasureX, treasureY))
 
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
@@ -65,6 +81,9 @@ while (finished == False):
 
   # Fill background image onto the screen
   screen.blit(backgroundImage, (0,0))
+
+  # Put treasure image onto the screen
+  screen.blit(treasureImage, (treasureX, treasureY))
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
