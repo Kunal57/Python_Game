@@ -84,7 +84,7 @@ treasureX = 890
 treasureY = 10
 
 # Set enemy coordinates
-enemyX = 600
+enemyX = 800
 enemyY = 500
 
 # Put treasure image into the window
@@ -108,6 +108,9 @@ collisionEnemy = False
 # Determines the direction the enemy is moving
 movingUp = True
 
+# Create list of enemies with each item in the list as a tuple
+enemies = [(enemyX, enemyY, movingUp)]
+
 # While our game is not finished
 while (finished == False):
   # get() method gives us all of the events that have happened since last check
@@ -119,21 +122,28 @@ while (finished == False):
   # Check if key is pressed
   pressedKeys = pygame.key.get_pressed()
 
-  # If enemy is about to reach the bottle of the screen then movingUp equals true
-  if (enemyY >= 665):
-    movingUp = True
-  # If enemy is about to reach the bottle of the screen then movingUp equals false
-  elif (enemyY <= 10 ):
-    movingUp = False
+  enemyIndex = 0
 
-  # If movingUp is true then move enemy up
-  if movingUp == True:
-    # Scale movement depending on the level
-    enemyY -= 5 * level
-  # Else if movingUp is false then move enemy down
-  else:
-    # Scale movement depending on the level
-    enemyY += 5 * level
+  # For loop to move each enemy
+  for enemyX,enemyY,movingUp in enemies:
+    # If enemy is about to reach the bottle of the screen then movingUp equals true
+    if (enemyY >= 665):
+      movingUp = True
+    # If enemy is about to reach the bottle of the screen then movingUp equals false
+    elif (enemyY <= 10 ):
+      movingUp = False
+
+    # If movingUp is true then move enemy up
+    if movingUp == True:
+      # Scale movement depending on the level
+      enemyY -= 5 * level
+    # Else if movingUp is false then move enemy down
+    else:
+      # Scale movement depending on the level
+      enemyY += 5 * level
+    enemies[enemyIndex] = (enemyX, enemyY, movingUp)
+    enemyIndex += 1
+
 
   # If Space Key is pressed then increase the y coordinate by 5
   if (pressedKeys[pygame.K_SPACE] == 1):
@@ -161,19 +171,22 @@ while (finished == False):
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
 
-  # Put enemyImage into window
-  screen.blit(enemyImage, (enemyX, enemyY))
+  # For loop to load each enemy into the window
+  for enemyX, enemyY, movingUp in enemies:
+    # Put enemyImage into window
+    screen.blit(enemyImage, (enemyX, enemyY))
+    # Call checkCollision function and store in variables
+    collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY)
 
   # Call checkCollision function and store in variables
   collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
-
-  # Call checkCollision function and store in variables
-  collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY)
 
   # Refactor checkCollisions function to make it DRY (Don't Repeat Yourself)
   if (collisionTreasure == True):
     # Increment Level
     level += 1
+    # Add new enemy to enemies list
+    enemies.append((enemyX - 50 * level, enemyY - 50 * level, False))
     # Create text object and display level that user is on
     textWin = font.render("You've reached level " + str(level), True, (255,255,255))
     # Display textWin on the screen and center the text
