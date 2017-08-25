@@ -102,6 +102,9 @@ frame = pygame.time.Clock()
 # Define if the playerImage has collided with the treasure
 collisionTreasure = False
 
+# Define if the playerImage has collided with the enemy
+collisionEnemy = False
+
 # Determines the direction the enemy is moving
 movingUp = True
 
@@ -125,10 +128,12 @@ while (finished == False):
 
   # If movingUp is true then move enemy up
   if movingUp == True:
-    enemyY -= 5
+    # Scale movement depending on the level
+    enemyY -= 5 * level
   # Else if movingUp is false then move enemy down
   else:
-    enemyY += 5
+    # Scale movement depending on the level
+    enemyY += 5 * level
 
   # If Space Key is pressed then increase the y coordinate by 5
   if (pressedKeys[pygame.K_SPACE] == 1):
@@ -161,6 +166,9 @@ while (finished == False):
 
   # Call checkCollision function and store in variables
   collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
+
+  # Call checkCollision function and store in variables
+  collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY)
 
   # Refactor checkCollisions function to make it DRY (Don't Repeat Yourself)
   if (collisionTreasure == True):
