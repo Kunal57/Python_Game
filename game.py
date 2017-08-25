@@ -96,6 +96,8 @@ font = pygame.font.Font("MuktaMahee.ttf", 60)
 # Create Levels variable
 level = 1
 
+enemyNames = {0:"Elon",1:"Steve",2:"Jeff",3:"Mark"}
+
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
 
