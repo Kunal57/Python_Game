@@ -70,9 +70,22 @@ treasureImage = pygame.transform.scale(treasureImage, (100, 100))
 # Make treasureImage ready for game
 treasureImage = treasureImage.convert_alpha()
 
+# Load enemy image to enemyImage variable
+enemyImage = pygame.image.load("asteroid.png")
+
+# Scale and transform enemyImage
+enemyImage = pygame.transform.scale(enemyImage, (35,40))
+
+# Make enemyImage ready for game
+enemyImage = enemyImage.convert_alpha()
+
 # Set treasure coordinates
 treasureX = 890
 treasureY = 10
+
+# Set enemy coordinates
+enemyX = 600
+enemyY = 500
 
 # Put treasure image into the window
 screen.blit(treasureImage, (treasureX, treasureY))
@@ -89,6 +102,9 @@ frame = pygame.time.Clock()
 # Define if the playerImage has collided with the treasure
 collisionTreasure = False
 
+# Determines the direction the enemy is moving
+movingUp = True
+
 # While our game is not finished
 while (finished == False):
   # get() method gives us all of the events that have happened since last check
@@ -99,6 +115,20 @@ while (finished == False):
 
   # Check if key is pressed
   pressedKeys = pygame.key.get_pressed()
+
+  # If enemy is about to reach the bottle of the screen then movingUp equals true
+  if (enemyY >= 665):
+    movingUp = True
+  # If enemy is about to reach the bottle of the screen then movingUp equals false
+  elif (enemyY <= 10 ):
+    movingUp = False
+
+  # If movingUp is true then move enemy up
+  if movingUp == True:
+    enemyY -= 5
+  # Else if movingUp is false then move enemy down
+  else:
+    enemyY += 5
 
   # If Space Key is pressed then increase the y coordinate by 5
   if (pressedKeys[pygame.K_SPACE] == 1):
@@ -125,6 +155,9 @@ while (finished == False):
 
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
+
+  # Put enemyImage into window
+  screen.blit(enemyImage, (enemyX, enemyY))
 
   # Call checkCollision function and store in variables
   collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
