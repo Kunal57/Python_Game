@@ -96,6 +96,7 @@ font = pygame.font.Font("MuktaMahee.ttf", 60)
 # Create Levels variable
 level = 1
 
+# Enemy Names Dictionary
 enemyNames = {0:"Elon",1:"Steve",2:"Jeff",3:"Mark"}
 
 # Create a Clock and store in frame variable
@@ -109,6 +110,9 @@ collisionEnemy = False
 
 # Determines the direction the enemy is moving
 movingUp = True
+
+# Empty string for collision enemy
+name = ""
 
 # Create list of enemies with each item in the list as a tuple
 enemies = [(enemyX, enemyY, movingUp)]
@@ -173,12 +177,30 @@ while (finished == False):
   # Put playerImage into window
   screen.blit(playerImage, (x, y))
 
+  # Create enemy index counter
+  enemyIndex = 0
   # For loop to load each enemy into the window
   for enemyX, enemyY, movingUp in enemies:
     # Put enemyImage into window
     screen.blit(enemyImage, (enemyX, enemyY))
     # Call checkCollision function and store in variables
     collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY)
+    # Check if player collided with enemy
+    if (collisionEnemy == True):
+      # Assign name variable value from enemyNames dictionary
+      name = enemyNames[enemyIndex]
+      # Create text object and display that the player got destroyed
+      textLose = font.render("You were destroyed by the asteroid "+name, True, (255,0,0))
+      # Display textLose on the screen and center the text
+      screen.blit(textLose, (500 - textLose.get_width()/2, 350 - textLose.get_height()/2))
+      # Update the screen
+      pygame.display.flip()
+      # Slow down frame to make text appear slower
+      frame.tick(1)
+    # Create frame rate (frames per second)
+    frame.tick(30)
+    # Increment enemyIndex counter
+    enemyIndex += 1
 
   # Call checkCollision function and store in variables
   collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
