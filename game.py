@@ -1,29 +1,29 @@
 import pygame
 
 # Function to check for collisions
-def checkCollision(x,y,treasureX,treasureY):
+def checkCollision(x,y,treasureX,treasureY, width, height):
   # Use global keyword to declare global variables
   global screen, textWin
 
   collisionState = False
 
   # Check if playerImage touches the treasureImage
-  if (y >= treasureY and y <= treasureY + 100):
-    if (x >= treasureX and x <= treasureX + 100):
+  if (y >= treasureY and y <= treasureY + height):
+    if (x >= treasureX and x <= treasureX + width):
       # Move playerImage back to original starting position
       y = 550
       x = 0
       collisionState = True
-    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+    elif (x + width >= treasureX and x + width <= treasureX + width):
       y = 550
       x = 0
       collisionState = True
-  elif (y + 200 >= treasureY and y + 200 <= treasureY + 200):
-    if (x >= treasureX and x <= treasureX + 100):
+  elif (y + height >= treasureY and y + height <= treasureY + height):
+    if (x >= treasureX and x <= treasureX + width):
       y = 550
       x = 0
       collisionState = True
-    elif (x + 100 >= treasureX and x + 100 <= treasureX + 100):
+    elif (x + width >= treasureX and x + width <= treasureX + width):
       y = 550
       x = 0
       collisionState = True
@@ -47,7 +47,7 @@ y = 550
 playerImage = pygame.image.load("rocket.png")
 
 # Scale and transform Image to fit rectangle
-playerImage = pygame.transform.scale(playerImage, (100, 200))
+playerImage = pygame.transform.scale(playerImage, (40, 160))
 
 # Make playerImage ready for game
 playerImage = playerImage.convert_alpha()
@@ -60,6 +60,15 @@ backgroundImage = pygame.transform.scale(backgroundImage, (1000,700))
 
 # Put background image into the window
 screen.blit(backgroundImage, (0,0))
+
+# Load earth image to earthImage variable
+earthImage = pygame.image.load("earth.png")
+
+# Scale and transform Image to be smaller than the playerImage
+earthImage = pygame.transform.scale(earthImage, (100, 100))
+
+# Make earthImage ready for game
+earthImage = earthImage.convert_alpha()
 
 # Load treasure image to treasureImage variable
 treasureImage = pygame.image.load("mars.png")
@@ -79,12 +88,16 @@ enemyImage = pygame.transform.scale(enemyImage, (35,40))
 # Make enemyImage ready for game
 enemyImage = enemyImage.convert_alpha()
 
+# Set Earth coordinates
+earthX = -40
+earthY = 640
+
 # Set treasure coordinates
 treasureX = 890
 treasureY = 10
 
 # Set enemy coordinates
-enemyX = 800
+enemyX = 200
 enemyY = 500
 
 # Put treasure image into the window
@@ -97,7 +110,7 @@ font = pygame.font.Font("MuktaMahee.ttf", 60)
 level = 1
 
 # Enemy Names Dictionary
-enemyNames = {0:"Elon",1:"Steve",2:"Jeff",3:"Mark"}
+enemyNames = {0:"Jeff",1:"Jeff",2:"Jeff",3:"Jeff",4:"Jeff",5:"Jeff",6:"Jeff",7:"Jeff",8:"Jeff"}
 
 # Create a Clock and store in frame variable
 frame = pygame.time.Clock()
@@ -142,19 +155,24 @@ while (finished == False):
     # If movingUp is true then move enemy up
     if movingUp == True:
       # Scale movement depending on the level
-      enemyY -= 5 * level
+      enemyY -= 10 * level
     # Else if movingUp is false then move enemy down
     else:
       # Scale movement depending on the level
-      enemyY += 5 * level
+      enemyY += 10 * level
     enemies[enemyIndex] = (enemyX, enemyY, movingUp)
     enemyIndex += 1
 
 
   # If Space Key is pressed then increase the y coordinate by 5
-  if (pressedKeys[pygame.K_SPACE] == 1):
-    y -= 3
-    x += 5
+  if (pressedKeys[pygame.K_DOWN] == 1):
+    y += 30
+  elif (pressedKeys[pygame.K_UP] == 1):
+    y -= 30
+  elif (pressedKeys[pygame.K_LEFT] == 1):
+    x -= 30
+  elif (pressedKeys[pygame.K_RIGHT] == 1):
+    x += 30
 
   # Store rectangle object in a variable
   # Define x, y, width, and height of rectangle
@@ -171,6 +189,9 @@ while (finished == False):
   # Fill background image onto the screen
   screen.blit(backgroundImage, (0,0))
 
+  # Put earth image onto the screen
+  screen.blit(earthImage, (earthX, earthY))
+
   # Put treasure image onto the screen
   screen.blit(treasureImage, (treasureX, treasureY))
 
@@ -184,7 +205,7 @@ while (finished == False):
     # Put enemyImage into window
     screen.blit(enemyImage, (enemyX, enemyY))
     # Call checkCollision function and store in variables
-    collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY)
+    collisionEnemy, y, x = checkCollision(x,y,enemyX,enemyY,35,40)
     # Check if player collided with enemy
     if (collisionEnemy == True):
       # Assign name variable value from enemyNames dictionary
@@ -203,14 +224,14 @@ while (finished == False):
     enemyIndex += 1
 
   # Call checkCollision function and store in variables
-  collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY)
+  collisionTreasure, y, x = checkCollision(x,y,treasureX,treasureY,100,100)
 
   # Refactor checkCollisions function to make it DRY (Don't Repeat Yourself)
   if (collisionTreasure == True):
     # Increment Level
     level += 1
     # Add new enemy to enemies list
-    enemies.append((enemyX - 50 * level, enemyY - 50 * level, False))
+    enemies.append((enemyX + 100, enemyY - 300, False))
     # Create text object and display level that user is on
     textWin = font.render("You've reached level " + str(level), True, (255,255,255))
     # Display textWin on the screen and center the text
